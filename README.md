@@ -1,7 +1,5 @@
 # NativeScript Wikitude SDK
 
-##### This is a fork of [@breningham/nativescript-wikitude](https://github.com/breningham/nativescript-wikitude) that has been unfortunately inactive.
-
 [![npm version](https://badge.fury.io/js/nativescript-wikitude-sdk.svg)](http://badge.fury.io/js/nativescript-wikitude-sdk)
 
 [![NPM](https://nodei.co/npm/nativescript-wikitude-sdk.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/nativescript-wikitude-sdk/)
@@ -109,7 +107,8 @@ this.WikitudeInstance.enableLocationProvider();
 
 ## TODO
 
-- Plugins API Exposure, not sure how to go about this, Wikitude allows Plugins, built in CPP to be used, and linked using their Plugin's API (an Example of a plugin would be face recognition). I'm unsure how to go about allowing users to do this. any advice would be appreciated...
+- Update to Wikitude 9.5 for Android and iOS
+- Plugins API Exposure. Wikitude allows Plugins, built in CPP to be used, and linked using their Plugin's API
 - Detecting if Device needs Calibration: Currently being held back by Android causing a crash when i try to listen to this event.
 - Camera Events: Could be useful for the Developer to check for the Camera Open, Closed, and any Crashes.
 - a better way to set the Wikitude LicenseKey and Required Features.
@@ -149,6 +148,10 @@ this.WikitudeInstance.enableLocationProvider();
 | ScreenCaptureFail    | fires when wikitude fails to capture the screen     | `ScreenCaptureFailedEventData`  |
 
 all can be imported from the index.d.ts.
+
+## Credits
+##### There used to be a fork of [@breningham/nativescript-wikitude](https://github.com/breningham/nativescript-wikitude) who originally started the plugin. It has been unfortunately inactive, so another fork was created. Plugin has been since then revamped several times, and this new version came up with all the possible updates for NativeScript 7 compatibility.
+
 
 ## License
 
