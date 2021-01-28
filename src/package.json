@@ -1,6 +1,6 @@
 {
 	"name": "nativescript-wikitude-sdk",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "NativeScript Wikitude SDK - provides access to Wikitude Augmented Reality",
 	"author": {
 		"name": "Matt Czapliński",
