@@ -1,0 +1,4 @@
+ext {
+    supportVersion = "28.+"
+    googlePlayServicesVersion = "16.+"
+}

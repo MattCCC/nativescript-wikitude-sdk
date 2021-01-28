@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes"
+      name="viewport"
+    />
+
+    <script src="https://www.wikitude.com/libs/architect.js"></script>
+  </head>
+
+  <body>
+    <script>
+      const World = {
+        debug: false,
+        tracker: null,
+        createOverlaysCalled: false,
+        worldLoaded() {
+          World.loaded = true;
+
+          World.log("World loaded");
+        },
+        init(smartEnabled, arImage, distance, isIOS) {
+          this.smartEnabled = smartEnabled;
+          this.arImage = arImage;
+          this.distance = distance;
+          this.isIOS = isIOS;
+
+          this.log("World Initialized");
+          this.initDebugger();
+
+          AR.hardware.smart.isPlatformAssistedTrackingSupported();
+        },
+        destroy() {
+          this.tracker.destroy();
+        },
+        initDebugger() {
+          if (this.debug) {
+            this.log("Debugger Enabled");
+
+            AR.logger.setHTMLLoggingEnabled(true);
+            AR.logger.setPlatformLoggingEnabled(true);
+          }
+        },
+        log(type, message) {
+          AR.logger.info("[" + type + "] " + message);
+
+          AR.platform.sendJSONObject({
+            action: type,
+            message: message,
+          });
+        },
+        createOverlays() {
+          if (World.createOverlaysCalled) {
+            return;
+          }
+
+          const smartEnabled = this.smartEnabled;
+
+          World.createOverlaysCalled = true;
+          World.modelClicked = false;
+
+          AR.platform.sendJSONObject({
+            action: "smartTrack",
+            value: smartEnabled,
+          });
+
+          this.tracker = new AR.InstantTracker({
+            smartEnabled: smartEnabled,
+            onChangedState(state) {
+              if (state === AR.InstantTrackerState.INITIALIZING) {
+                World.log("Running without ARCore");
+              } else if (World.platformAssisstedTrackingSupported) {
+                World.log("Running with ARCore");
+              }
+            },
+            deviceHeight: 1.5,
+            onError(e) {
+              World.log(e);
+            },
+            onChangeStateError(e) {
+              World.log(e);
+            },
+          });
+
+          const model = new AR.Model(this.arImage, {
+            onLoaded: World.worldLoaded,
+            onInitialized: function() {
+              World.log("Model initialized");
+            },
+            onClick: function() {
+              if (World.modelClicked === false) {
+                World.modelClicked = true;
+                AR.platform.sendJSONObject({
+                  action: "navigate",
+                });
+              }
+            },
+            translate:
+              this.isIOS && !this.smartEnabled
+                ? {
+                    x: 0.1,
+                    y: 0,
+                    z: 0.5,
+                  }
+                : {
+                    y: this.distance,
+                    z: 0.5,
+                  },
+          });
+
+          const rotateAnimation = new AR.PropertyAnimation(
+            model,
+            "rotate.z",
+            0,
+            360,
+            3000
+          );
+          rotateAnimation.start(-1);
+
+          const instantTrackable = new AR.InstantTrackable(this.tracker, {
+            onTrackingStarted() {
+              /* Do something when tracking is started (recognized). */
+
+              setTimeout(() => {
+                instantTrackable.drawables.addCamDrawable(model);
+              });
+            },
+            onTrackingStopped() {
+              /* Do something when tracking is stopped (lost). */
+            },
+            onError: console.log,
+          });
+
+          setInterval(() => {
+            if (this.tracker.canStartTracking) {
+              if (this.tracker.state === AR.InstantTrackerState.INITIALIZING) {
+                this.tracker.state = AR.InstantTrackerState.TRACKING;
+              }
+            }
+          }, 1000);
+        },
+      };
+
+      AR.hardware.smart.onPlatformAssistedTrackingAvailabilityChanged = function(
+        availability
+      ) {
+        switch (availability) {
+          case AR.hardware.smart.SmartAvailability.INDETERMINATE_QUERY_FAILED:
+            /* query failed for some reason; try again or accept the fact. */
+            World.log(
+              "Could not determine if platform assisted tracking is supported.<br>Running without platform assisted tracking (ARKit or ARCore)."
+            );
+            World.createOverlays();
+            break;
+          case AR.hardware.smart.SmartAvailability.CHECKING_QUERY_ONGOING:
+            /* query currently ongoing; be patient and do nothing or inform the user about the ongoing process */
+            break;
+          case AR.hardware.smart.SmartAvailability.UNSUPPORTED:
+            /* not supported, create the scene now without platform assisted tracking enabled */
+            World.log(
+              "Running without platform assisted tracking (ARKit or ARCore)."
+            );
+            World.createOverlays();
+            break;
+          case AR.hardware.smart.SmartAvailability.SUPPORTED_UPDATE_REQUIRED:
+            World.log("Asking to update (ARCore)");
+            World.createOverlays();
+            break;
+          case AR.hardware.smart.SmartAvailability.SUPPORTED:
+            /* supported, create the scene now with platform assisted tracking enabled * * SUPPORTED_UPDATE_REQUIRED may be followed by SUPPORTED, make sure not to * create the scene twice */
+            if (!World.createOverlaysCalled) {
+              World.createOverlays();
+            }
+            break;
+        }
+      };
+    </script>
+  </body>
+</html>
