@@ -16,11 +16,11 @@ Before you can use this plugin you should ensure your application has permission
 
 ### Running the Demo
 
-We include a very basic AR Sample in the Demo app,
+Basic Vue compatible dmeo is available.
 
-but if you want to check something a bit more advanced from [wikitude examples](https://github.com/Wikitude/wikitude-sdk-samples) and place them in [`demo/app/wikitude`](demo/app/WikitudeExamples)... Then update the URL Reference in either the `items.component.ts` for Nativescript-angular or the `main-view-model.ts` in Regular Nativescript.
+If you want to check something a bit more advanced from [wikitude examples](https://github.com/Wikitude/wikitude-sdk-samples) and place them in [`demo/app/wikitude`](demo/app/WikitudeExamples)... Then update the URL Reference in either the `items.component.ts` for Nativescript-angular or the `main-view-model.ts` in Regular Nativescript.
 
-and then go and grab a Trial License from [Wikitude's Website](http://www.wikitude.com/developer/licenses) and place it in [`demo/app/main-view-model.ts`](demo/app/main-view-model.ts) on line 13
+Then go and grab a Trial License from [Wikitude's Website](http://www.wikitude.com/developer/licenses) and place it in [`demo/app/main-view-model.ts`](demo/app/main-view-model.ts) on line 13
 
 ## Installation
 
