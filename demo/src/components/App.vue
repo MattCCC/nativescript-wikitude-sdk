@@ -31,14 +31,21 @@ export default {
                     const isIOSStr = isIOS ? 'true' : 'false';
                     const distance = isIOS ? 10 : 0;
 
-                    console.log('World Load Success', wikitudeInstance);
+                    console.log('World Load Success', distance, wikitudeInstance);
+
+                    if (isIOS) {
+                        this.wikitude = this.$refs.wikitude.nativeView;
+                        this.wikitude.runJavascript('World.init(false, "assets/earth.wt3", ' + distance + ', ' + isIOSStr + ')');
+
+                        // Since our permissions plugin doesn't work on iOS, end here
+                        return;
+                    }
 
                     this.requestPermissions()
                         .then(() => {
                             console.log("Trigger init call");
 
                             this.wikitude = this.$refs.wikitude.nativeView;
-
                             this.wikitude.runJavascript('World.init(false, "assets/earth.wt3", ' + distance + ', ' + isIOSStr + ')');
                         })
                         .catch((ee) => {
@@ -57,7 +64,8 @@ export default {
     },
     methods: {
         hasPermissions() {
-            return permissions.hasPermissions([
+            // Since our permissions plugin doesn't work on iOS, let Wikitude SDK handle asking for Camera Permissions
+            return isIOS || permissions.hasPermissions([
                     android.Manifest.permission.CAMERA,
                     android.Manifest.permission.ACCESS_FINE_LOCATION,
             ]).success === 2;
