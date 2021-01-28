@@ -28,7 +28,7 @@
 		"tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json --exclude \"**/node_modules/**\"",
 		"ci.tslint": "npm run init && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**' --exclude '**/platforms/**'",
 		"prepack": "npm run build.native",
-		"demo.ios": "npm run init && cd ../demo && TNS_TYPESCRIPT_DECLARATIONS_PATH='$(pwd)/typings' && ns debug ios --no-hmr --log trace > debug.log",
+		"demo.ios": "npm run init && cd ../demo && ns debug ios --no-hmr --log trace > debug.log",
 		"demo.android": "npm run init && cd ../demo && ns debug android --debug-brk --no-hmr --log trace > debug.log",
 		"demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
 		"plugin.prepare": "npm run build && cd ../demo && ns plugin remove nativescript-wikitude-sdk && ns plugin add ../src",
