@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { EventData } from 'tns-core-modules/ui/page/page';
+import { EventData } from '@nativescript/core/data/observable';
 import { ImageSource } from '@nativescript/core/image-source';
 import { ContentView, Property } from '@nativescript/core';
 

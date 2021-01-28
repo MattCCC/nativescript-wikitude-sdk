@@ -11,8 +11,4 @@ platforms/android/*
 !platforms/android/*.jar
 platforms/ios/WikitudeSDK.framework/*.sh
 
-wikitude.ios.d.ts
-wikitude.android.d.ts
-wikitude.common.d.ts
-
 WikitudeSDK*.zip
