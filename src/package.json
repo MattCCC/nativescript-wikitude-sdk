@@ -20,7 +20,7 @@
 	"scripts": {
 		"init": "npm i && ts-patch install",
 		"prepare.ios": "node scripts/get-ios-framework.js",
-		"build": "npm i && npm run tsc && npm run build.native",
+		"build": "npm i && npm run ios.prepare && npm run tsc && npm run build.native",
 		"build.native": "node scripts/build-native.js",
 		"pack": "cd ../publish; chmod +rx pack.sh; ./pack.sh",
 		"publish": "cd ../publish; chmod +rx publish.sh; ./publish.sh",
