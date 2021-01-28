@@ -3,7 +3,7 @@ import { ContentView, Property } from '@nativescript/core';
 import { fromNativeSource } from '@nativescript/core/image-source';
 // import { isIOS } from '@nativescript/core';
 
-import { ScreenCaptureSuccessEventData, ScreenCaptureFailedEventData, JSONReceivedEventData, WorldLoadFailedEventData, WorldLoadSuccessEventData } from './typings/wikitude.d';
+import { ScreenCaptureSuccessEventData, ScreenCaptureFailedEventData, JSONReceivedEventData, WorldLoadFailedEventData, WorldLoadSuccessEventData } from './wikitude.d';
 
 export class Common extends ContentView implements IWikitudeEventListener {
 
