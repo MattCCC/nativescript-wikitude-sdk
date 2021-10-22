@@ -1,21 +1,22 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Common, LicenseProperty, UrlProperty, FeaturesProperty, IWikitudeFunctions } from './wikitude.common';
+import { Common, UrlProperty, FeaturesProperty, IWikitudeFunctions, LicenseProperty } from './wikitude.common';
 import { on as AddEventListener, off as RemoveEventListener, suspendEvent, resumeEvent } from '@nativescript/core/application';
 import { knownFolders } from '@nativescript/core';
 
 @NativeClass()
-export class WikitudeDelegate extends NSObject {
+@ObjCClass(WTArchitectViewDelegate)
+export class WikitudeDelegate extends NSObject implements WTArchitectViewDelegate {
 
-    public static ObjCProtocols = [ WTArchitectViewDelegate ];
-    private owner: WeakRef<Wikitude> = null;
+    private owner: WeakRef<Wikitude>;
 
     public get Owner(): Wikitude {
         return this.owner.get();
     }
 
-    public initWithOwner(owner: Wikitude) {
+    public static initWithOwner(owner: Wikitude) {
         const delegate = new WikitudeDelegate();
         delegate.owner = new WeakRef(owner);
+
         return delegate;
     }
 
@@ -75,6 +76,8 @@ export class WikitudeDelegate extends NSObject {
 
 }
 
+console.log('WIKITUDE Initialized');
+
 export class Wikitude extends Common implements IWikitudeFunctions {
 
     public hasStarted: boolean = false;
@@ -101,7 +104,7 @@ export class Wikitude extends Common implements IWikitudeFunctions {
         this.hasLoaded = false;
         this.isLicensed = false;
 
-        this.Delegate = (WikitudeDelegate.alloc() as WikitudeDelegate).initWithOwner(this);
+        this.Delegate = WikitudeDelegate.initWithOwner(this);
         this.MotionManager = new CMMotionManager();
         this._ios = new WTArchitectView({ frame: CGRectZero });
         this._ios.delegate = this.Delegate;
@@ -157,7 +160,7 @@ export class Wikitude extends Common implements IWikitudeFunctions {
     }
 
     restart() {
-        this.log ('restarting...');
+        this.log('restarting...');
         if ( this.isRunning() ) {
             this.stop();
         }
@@ -211,7 +214,6 @@ export class Wikitude extends Common implements IWikitudeFunctions {
         this.loadUrl(this.url, this.features);
     }
 
-    setLocation(latitude: number, longitude: number, accuracy: number);
     setLocation(latitude: number, longitude: number, altitude?: number, accuracy?: number) {
         if (!this._ios) {
             return;
@@ -251,7 +253,9 @@ export class Wikitude extends Common implements IWikitudeFunctions {
     }
 
     clearCache() {
-        this._ios.clearCache();
+        if (this._ios && this._ios.clearCache) {
+            this._ios.clearCache();
+        }
     }
 
     toggleFlash() {
