@@ -76,8 +76,6 @@ export class WikitudeDelegate extends NSObject implements WTArchitectViewDelegat
 
 }
 
-console.log('WIKITUDE Initialized');
-
 export class Wikitude extends Common implements IWikitudeFunctions {
 
     public hasStarted: boolean = false;
@@ -156,7 +154,10 @@ export class Wikitude extends Common implements IWikitudeFunctions {
             this.log('wikitude is not running, skipping stop()');
             return;
         }
-        this._ios.stop();
+
+        if (this._ios) {
+            this._ios.stop();
+        }
     }
 
     restart() {
