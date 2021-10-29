@@ -4,7 +4,7 @@
 
 [![NPM](https://nodei.co/npm/nativescript-wikitude-sdk.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/nativescript-wikitude-sdk/)
 
-Provides NativeScript 7+ access to Wikitude Augmented Reality (9.1.0 on Android and 9.0.0 on iOS).
+Provides NativeScript 8+ access to Wikitude Augmented Reality (9.1.0 on Android and 9.0.0 on iOS).
 
 ## Prerequisites / Requirements
 

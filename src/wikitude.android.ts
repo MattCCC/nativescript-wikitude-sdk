@@ -320,8 +320,11 @@ export class Wikitude extends Common implements IWikitudeFunctions {
     }
 
     [UrlProperty.setNative](url) {
-        this.log('URL Property Changed', url);
-        this.loadUrl(url, this.features);
+        this.log('URL Property Change', url);
+        if (url) {
+            this.loadUrl(url, this.features);
+            this.log('URL Property has been updated');
+        }
     }
 
     [FeaturesProperty.getDefault]() {
