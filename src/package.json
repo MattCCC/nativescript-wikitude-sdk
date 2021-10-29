@@ -1,6 +1,6 @@
 {
 	"name": "nativescript-wikitude-sdk",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "NativeScript Wikitude SDK - provides access to Wikitude Augmented Reality",
 	"author": {
 		"name": "Matt Czapliński",
@@ -9,8 +9,8 @@
 	"main": "wikitude",
 	"nativescript": {
 		"platforms": {
-			"android": "7.1.0",
-			"ios": "7.1.0"
+			"android": "8.0.0",
+			"ios": "8.0.0"
 		}
 	},
 	"repository": {
@@ -20,7 +20,7 @@
 	"scripts": {
 		"init": "npm i && ts-patch install",
 		"prepare.ios": "node scripts/get-ios-framework.js",
-		"build": "npm i && npm run ios.prepare && npm run tsc && npm run build.native",
+		"build": "npm i && npm run prepare.ios && npm run tsc && npm run build.native",
 		"build.native": "node scripts/build-native.js",
 		"pack": "cd ../publish; chmod +rx pack.sh; ./pack.sh",
 		"publish": "cd ../publish; chmod +rx publish.sh; ./publish.sh",
@@ -48,9 +48,9 @@
 	"license": "Apache-2.0",
 	"homepage": "https://github.com/MattCCC/nativescript-wikitude-sdk",
 	"devDependencies": {
-		"@nativescript/core": "^7.1.0",
-		"@nativescript/types": "^7.1.0",
-		"@nativescript/webpack": "^4.0.0",
+		"@nativescript/core": "^8.1.4",
+		"@nativescript/types": "^8.1.1",
+		"@nativescript/webpack": "^5.0.0",
 		"@typescript-eslint/eslint-plugin": "^4.12.0",
 		"@typescript-eslint/eslint-plugin-tslint": "^4.12.0",
 		"@typescript-eslint/parser": "^4.12.0",
@@ -61,7 +61,7 @@
 		"semver": "^5.6.0",
 		"ts-patch": "^1.3.1",
 		"tslint": "^5.12.1",
-		"typescript": "4.1.3"
+		"typescript": "^4.1.3"
 	},
 	"bootstrapper": "nativescript-plugin-seed",
 	"dependencies": {

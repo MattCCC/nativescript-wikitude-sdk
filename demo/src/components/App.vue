@@ -31,6 +31,8 @@ export default {
                     const isIOSStr = isIOS ? 'true' : 'false';
                     const distance = isIOS ? 10 : 0;
 
+                    console.log("distance", distance);
+
                     console.log('World Load Success', distance, wikitudeInstance);
 
                     if (isIOS) {
@@ -56,9 +58,12 @@ export default {
         };
     },
     created() {
+        console.log('created');
         if (this.hasPermissions()) {
+            console.log('hasPermissions');
             this.permissionsGranted = true;
         } else {
+            console.log('requestPermissions');
             this.requestPermissions();
         }
     },

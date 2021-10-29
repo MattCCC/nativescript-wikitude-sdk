@@ -11,3 +11,5 @@ platforms
 
 !webpack.config.js
 !babel.config.js
+
+.migration_backup
