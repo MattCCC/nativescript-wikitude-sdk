@@ -1,11 +1,8 @@
 import { Common, IWikitudeFunctions } from './wikitude.common';
-export declare class WikitudeDelegate extends NSObject {
-    static ObjCProtocols: {
-        prototype: WTArchitectViewDelegate;
-    }[];
+export declare class WikitudeDelegate extends NSObject implements WTArchitectViewDelegate {
     private owner;
     get Owner(): Wikitude;
-    initWithOwner(owner: Wikitude): WikitudeDelegate;
+    static initWithOwner(owner: Wikitude): WikitudeDelegate;
     architectViewDidFinishLoadArchitectWorldNavigation(architectView: any, navigation: any): void;
     architectViewDidFailToLoadArchitectWorldNavigationWithError(architectView: any, navigation: any, error: NSError): void;
     architectViewReceivedJSONObject(architectView: any, data: NSDictionary<string, any>): void;
@@ -39,7 +36,7 @@ export declare class Wikitude extends Common implements IWikitudeFunctions {
     runJavascript(jsString: string): void;
     loadUrl(urlString: any, features?: number): void;
     reload(): void;
-    setLocation(latitude: number, longitude: number, accuracy: number): any;
+    setLocation(latitude: number, longitude: number, altitude?: number, accuracy?: number): void;
     disableLocationProvider(): void;
     enableLocationProvider(): void;
     captureScreen(captureWebViewContent?: boolean, justSave?: boolean): void;
