@@ -11,7 +11,10 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
+      - run: npm i -g nativescript
       - run: cd ./src && npm ci
+      - run: cd ./src && git config --global user.name "${{ secrets.USERNAME }}"
+      - run: cd ./src && git config --global user.email "${{ secrets.EMAIL }}"
       - run: cd ./src && npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
